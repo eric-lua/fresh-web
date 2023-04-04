@@ -7,16 +7,21 @@ import * as $0 from "./routes/404.tsx";
 import * as $1 from "./routes/[name].tsx";
 import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/about.tsx";
-import * as $4 from "./routes/api/joke.ts";
-import * as $5 from "./routes/api/postData.ts";
-import * as $6 from "./routes/index.tsx";
-import * as $7 from "./routes/patttern.ts";
-import * as $8 from "./routes/search.tsx";
-import * as $9 from "./routes/store.tsx";
+import * as $4 from "./routes/api/inserts.ts";
+import * as $5 from "./routes/api/joke.ts";
+import * as $6 from "./routes/api/mysql.ts";
+import * as $7 from "./routes/api/postData.ts";
+import * as $8 from "./routes/cms/mysql.tsx";
+import * as $9 from "./routes/index.tsx";
+import * as $10 from "./routes/patttern.ts";
+import * as $11 from "./routes/search.tsx";
+import * as $12 from "./routes/store.tsx";
 import * as $$0 from "./islands/Counter.tsx";
-import * as $$1 from "./islands/PostTest.tsx";
-import * as $$2 from "./islands/Redirect.tsx";
-import * as $$3 from "./islands/Store.tsx";
+import * as $$1 from "./islands/Mysql.tsx";
+import * as $$2 from "./islands/MysqlManagerIsland.tsx";
+import * as $$3 from "./islands/PostTest.tsx";
+import * as $$4 from "./islands/Redirect.tsx";
+import * as $$5 from "./islands/Store.tsx";
 
 const manifest = {
   routes: {
@@ -24,18 +29,23 @@ const manifest = {
     "./routes/[name].tsx": $1,
     "./routes/_middleware.ts": $2,
     "./routes/about.tsx": $3,
-    "./routes/api/joke.ts": $4,
-    "./routes/api/postData.ts": $5,
-    "./routes/index.tsx": $6,
-    "./routes/patttern.ts": $7,
-    "./routes/search.tsx": $8,
-    "./routes/store.tsx": $9,
+    "./routes/api/inserts.ts": $4,
+    "./routes/api/joke.ts": $5,
+    "./routes/api/mysql.ts": $6,
+    "./routes/api/postData.ts": $7,
+    "./routes/cms/mysql.tsx": $8,
+    "./routes/index.tsx": $9,
+    "./routes/patttern.ts": $10,
+    "./routes/search.tsx": $11,
+    "./routes/store.tsx": $12,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
-    "./islands/PostTest.tsx": $$1,
-    "./islands/Redirect.tsx": $$2,
-    "./islands/Store.tsx": $$3,
+    "./islands/Mysql.tsx": $$1,
+    "./islands/MysqlManagerIsland.tsx": $$2,
+    "./islands/PostTest.tsx": $$3,
+    "./islands/Redirect.tsx": $$4,
+    "./islands/Store.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,

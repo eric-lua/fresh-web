@@ -1,5 +1,5 @@
-declare namespace User {
-  interface IUser {
+declare namespace IUser {
+  interface User {
     id: string;
     login: string;
     name: string;

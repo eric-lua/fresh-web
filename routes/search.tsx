@@ -41,7 +41,7 @@ export default function Page({ data }: PageProps<Data>) {
       <div>
         <form method="get">
           <input type="text" name="q" value={query} />
-          <button type="submit">Search</button>
+          <button type="submit">Search version: 04031601</button>
         </form>
         <ul>
           {results.map((name) => <li key={name}>{name}</li>)}

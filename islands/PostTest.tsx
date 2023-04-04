@@ -1,4 +1,5 @@
-import { useState } from 'preact/hooks'
+import { useState } from 'preact/hooks';
+import { counter } from "../store/index.ts";
 
 type Props = {}
 
@@ -10,7 +11,7 @@ const PostTest = (props: Props) => {
     // const res = await fetch('', { // 这里会自动识别填充当前页面的路由
     // const res = await fetch('/api/postData?q=aaa', {
     const res = await fetch('/static.json', {
-    // const res = await fetch('https://github.com/api/static.json?q=aaa', {
+      // const res = await fetch('https://github.com/api/static.json?q=aaa', {
       method: 'get',
       headers: { 'content-type': 'application/json' },
     });
@@ -19,7 +20,13 @@ const PostTest = (props: Props) => {
   }
 
   return (
-    <div onClick={getPostData}>PostTest: {JSON.stringify(postData)}</div>
+    <div>
+      <br />
+      <hr />
+      <span>counter： {counter.value}</span>
+      <hr />
+      <div onClick={getPostData}>PostTest: {JSON.stringify(postData)}</div>
+    </div>
   )
 }
 

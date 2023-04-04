@@ -16,3 +16,20 @@ export const useParams: <T = any>(req: Request) => T = (req) => {
 
   return result;
 }
+
+/**
+ * Action没找到统一处理
+ * @param action
+ * @returns Response
+ */
+export const ErrorMap = {
+  OK: { code: 0, message: 'success' },
+  NeedLogin: { code: 0, message: 'Looks like you need to log in.' },
+  ActionNotFound: { code: 0, message: 'Action \'%s\' does not found.' },
+}
+export const handleActionNotFound: (action: IApiV1.Action) => Response = (action) => {
+  return new Response(JSON.stringify({
+    ...ErrorMap.ActionNotFound,
+    message: ErrorMap.ActionNotFound.message.replace(/%s/, action),
+  }));
+}

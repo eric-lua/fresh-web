@@ -3,7 +3,7 @@ import { testSignals, setCounter, counter, useComputed } from "../store/index.ts
 import { useEffect, useState } from "preact/hooks";
 
 type Props = {
-  user: User.IUser;
+  user: IUser.User;
 }
 
 function Store({ user }: Props): JSX.Element {

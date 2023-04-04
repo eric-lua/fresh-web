@@ -6,7 +6,7 @@ type Props = {
 
 const PageWarpper = ({ children }: Props) => {
   return (
-    <div>
+    <div class="h-screen flex flex-col">
       <header>
         <nav class="flex justify-start p-4">
           <a class="w-20" href="/">Home</a>
@@ -14,10 +14,11 @@ const PageWarpper = ({ children }: Props) => {
           <a className="w-20" href="/store">store</a>
           <a className="w-20" href="/search">search</a>
           <a className="w-20" href="/joke">joke</a>
+          <a className="w-20" href="/cms/mysql">Mysql</a>
         </nav>
       </header>
 
-      <main>{children}</main>
+      <main class="flex-1">{children}</main>
     </div>
   )
 }

@@ -19,7 +19,7 @@ export const handler: Handlers = {
     const { username } = useParams<{ username: string }>(req);
     console.log('store ctx: ', ctx.state);
     
-    const user: User.IUser = {
+    const user: IUser.User = {
       id: crypto.randomUUID(),
       login: 'true',
       name: username || '没有用户名',
@@ -33,7 +33,7 @@ export const handler: Handlers = {
   }
 }
 
-const store = (p: PageProps<User.IUser>) => {
+const store = (p: PageProps<IUser.User>) => {
   const { data } = p;
 
   return <PageWarpper>
