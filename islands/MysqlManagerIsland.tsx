@@ -4,12 +4,20 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 type Props = {}
 
 const MysqlManagerIsland = (props: Props) => {
-  const [tables, setTables] = useState([])
+  const [tables, setTables] = useState<string[]>([])
   const getTables = async () => {
-    const result = await fetch('/api/mysql?action=QueryAllTables', {
-      method: 'post',
+    const result = await fetch('/api/mysql?action=QueryAllTables', { method: 'post' });
+    setTables(await result.json());
+  }
+
+  const [tableData, setTableData] = useState([])
+  const getTableData = async (tableName: string) => {
+    const result = await fetch('/api/mysql?action=QueryTableData', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ tableName }),
     })
-    console.log('QueryAllTables: ', await result.json());
+    setTableData(await result.json())
   }
 
   const createTable = async () => {
@@ -50,7 +58,13 @@ const MysqlManagerIsland = (props: Props) => {
   return (
     <div class="flex h-full">
       <aside class="w-48">
-
+        <ul>
+          {
+            tables.map(item => <li key={item} onClick={() => getTableData(item)}>
+              {item}
+            </li>)
+          }
+        </ul>
       </aside>
       <main class="flex-1">
         MysqlManagerIsland
@@ -70,6 +84,25 @@ const MysqlManagerIsland = (props: Props) => {
         >
           Body 传参测试
         </button>
+
+        <hr />
+        {
+          tableData.length > 0 && <table>
+            <thead>
+              <tr>
+                {
+                  Object.keys(tableData[0]).map(item => <th key={item}>{item}</th>)
+                }
+              </tr>
+            </thead>
+            <tbody>
+              {/* {tableData.map(item => <tr key={Math.random()}></tr>)} */}
+              {tableData.map(item => <tr>
+                {Object.values(item).map(v => <td>{v ?? ' - '}</td>)}
+              </tr>)}
+            </tbody>
+          </table>
+        }
       </main>
     </div>
   )

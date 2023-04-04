@@ -10,11 +10,7 @@ const client = await new Client().connect({
   poolSize: 3,
 });
 
-// `user_id` char(100) NOT NULL,
-// `user_name` varchar(100) NOT NULL,
-// `user_pass` varchar(100) NOT NULL,
-// `user_email` varchar(100) DEFAULT NULL,
-// `user_avatar` varchar(40),
+// test
 const inserts = async () => {
   console.log('插入数据');
 
@@ -27,6 +23,7 @@ const inserts = async () => {
   return result;
 }
 
+// test
 const query = async () => {
   const users = await client.query(`select * from e_user where user_name = "eric%"`);
   const queryWithParams = await client.query(
@@ -37,28 +34,77 @@ const query = async () => {
   return { users, queryWithParams }
 }
 
+/** 查询所有数据表 */
+export const queryTables: () => Promise<string[]> = async () => {
+  const r = await client.query('show tables');
+  if (r instanceof Array) return r.map((item: Record<string, string>) => Object.values(item)[0]);
+  return [];
+}
 
-export const queryTables = async () => {
-  const sql = `show tables`;
+/** 创建数据表 */
+export const createTable = async ({
+  tableName, fields, primaryKey, needCreateTime = false, needUpdateTime = false,
+}: IMysql.CreateTable) => {
+  let sql = "CREATE TABLE `" + tableName + "` (";
+
+  for (const item of fields) {
+    let field = '`' + item.field + '`';
+    switch (item.type) {
+      case 'TIMESTAMP': {
+        field += ' TIMESTAMP';
+        break;
+      }
+      case 'CHAR': {
+        if (typeof item.constraintValue === 'number') {
+          field += ` CHAR(${item.constraintValue})`;
+        } else {
+          field += ' CHAR';
+        }
+        break;
+      }
+      case 'VARCHAR': {
+        if (typeof item.constraintValue === 'number') {
+          field += ` VARCHAR(${item.constraintValue})`;
+        } else {
+          field += ' VARCHAR';
+        }
+        break;
+      }
+      default:
+        break;
+    }
+
+    if (item.default !== undefined) field += ` DEFAULT ${item.default}`;
+
+    if (item.notNull) field += ' NOT NULL';
+
+    if (item.onUpdate) field += ` ON UPDATE ${item.onUpdate}`;
+
+    sql = sql + '\n' + field;
+  }
+
+  if (needCreateTime) sql += `\`create_time\` timestamp DEFAULT CURRENT_TIMESTAMP,`;
+  if (needUpdateTime) sql += `\`update_time\` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,`;
+
+  if (primaryKey) sql += `PRIMARY KEY (\`${primaryKey}\`)`;
+
+  sql += ") ENGINE=InnoDB DEFAULT CHARSET=utf8";
+  // let s = "`sr_id` char(100) NOT NULL,\
+  //   `sr_title` varchar(100) NOT NULL,\
+  //   `sr_content` varchar(100) NOT NULL,\
+  //   `sr_remark` varchar(100) DEFAULT NULL,\
+  //   `sr_users` varchar(100) DEFAULT NULL,\
+  //   `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,\
+  //   `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
+  //   PRIMARY KEY (`sr_id`)\
+  // ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+  console.log('CREATE TABLE SQL: ', sql);
+
   return await client.query(sql);
 }
 
-export const createTable = async () => {
-  const sql = "CREATE TABLE `e_strong_reminder1` (\
-    `sr_id` char(100) NOT NULL,\
-    `sr_title` varchar(100) NOT NULL,\
-    `sr_content` varchar(100) NOT NULL,\
-    `sr_remark` varchar(100) DEFAULT NULL,\
-    `sr_users` varchar(100) DEFAULT NULL,\
-    `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,\
-    `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\
-    PRIMARY KEY (`sr_id`)\
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
-  return await client.query(sql);
-}
-
-export const queryTableData = async () => {
-  const sql = `select * from e_user`;
+export const queryTableData = async (tableName: string) => {
+  const sql = `select * from ${tableName}`;
   return await client.query(sql);
 }
 

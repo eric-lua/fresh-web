@@ -18,7 +18,7 @@ export const handler: Handlers = {
     }
     if (reqJSON) console.log('POST 请求 body: ', reqJSON);
 
-    let result: Record<string, unknown> = {};
+    let result: Record<string, unknown> | string[] = {};
 
     switch (action) {
       case 'QueryAllTables': {
@@ -30,9 +30,7 @@ export const handler: Handlers = {
         break;
       }
       case 'QueryTableData': {
-        console.log('请求的数据：', reqJSON);
-
-        result = await QueryTableData();
+        result = await QueryTableData(reqJSON.tableName);
         break;
       }
       default:
@@ -53,14 +51,14 @@ async function QueryAllTables() {
 async function CreateTable() {
   console.log('createTable start');
 
-  const res = await createTable();
+  const res = await createTable({});
   console.log('await createTable: ', res);
   return res;
 }
-async function QueryTableData() {
+async function QueryTableData(tableName: string) {
   console.log('queryTableData start');
 
-  const res = await queryTableData();
+  const res = await queryTableData(tableName);
   console.log('await queryTableData: ', res);
   return res;
 }
