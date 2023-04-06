@@ -12,7 +12,7 @@ await logger.initFileLogger('log', {
 } as fileLoggerOptions);
 
 let Version = 'development';
-// deno-lint-ignore no-extra-semi
+// deno-lint-ignore no-empty no-extra-semi
 try { Version = Deno.env.get('DENO_DEPLOYMENT_ID') ?? Version } catch (_error) { };
 if (Version !== 'development') logger.disableConsole();
 

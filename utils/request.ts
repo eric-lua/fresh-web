@@ -29,7 +29,9 @@ export const ErrorMap = {
 }
 export const handleActionNotFound: (action: IApiV1.Action) => Response = (action) => {
   return new Response(JSON.stringify({
-    ...ErrorMap.ActionNotFound,
-    message: ErrorMap.ActionNotFound.message.replace(/%s/, action),
+    // ...ErrorMap.ActionNotFound,
+    // message: ErrorMap.ActionNotFound.message.replace(/%s/, action),
+    code: IErrorCode.ErrorCode.ActionNotFound,
+    message: IErrorCode.ErrorMessage.ActionNotFound.replace(/%s/, action),
   }));
 }

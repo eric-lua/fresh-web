@@ -1,13 +1,13 @@
-import { createTable, inserts, queryTableData, queryTables } from "../../models/mysql-mod.ts";
+import { createTable, execSql, inserts, queryTableData, queryTables } from "../../models/mysql-mod.ts";
 import { Handlers, HandlerContext } from "$fresh/server.ts";
 import { handleActionNotFound, useParams } from "../../utils/index.ts";
 
 export const handler: Handlers = {
-  GET: async (req: Request, _ctx: HandlerContext): Promise<Response> => {
+  GET: async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
     const res = await inserts();
     return new Response(JSON.stringify({ result: res }));
   },
-  POST: async (req: Request, ctx: HandlerContext): Promise<Response> => {
+  POST: async (req: Request, _ctx: HandlerContext): Promise<Response> => {
     const { action = 'noAction' } = useParams<IReqAction>(req);
     console.log('action: ', action);
     let reqJSON;
@@ -21,6 +21,10 @@ export const handler: Handlers = {
     let result: Record<string, unknown> | string[] = {};
 
     switch (action) {
+      case 'ExecSql': {
+        result = await ExecSql(reqJSON.sql);
+        break;
+      }
       case 'QueryAllTables': {
         result = await QueryAllTables();
         break;
@@ -43,6 +47,11 @@ export const handler: Handlers = {
   },
 }
 
+async function ExecSql(sql: string) {
+  const res = await execSql(sql);
+  console.log('await execSql: ', res);
+  return res;
+}
 async function QueryAllTables() {
   const res = await queryTables();
   console.log('await queryTables: ', res);
@@ -51,6 +60,7 @@ async function QueryAllTables() {
 async function CreateTable() {
   console.log('createTable start');
 
+  // TODO  
   const res = await createTable({});
   console.log('await createTable: ', res);
   return res;

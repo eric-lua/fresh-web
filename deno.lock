@@ -190,6 +190,7 @@
     "https://deno.land/x/ts_morph@16.0.0/mod.ts": "adba9b82f24865d15d2c78ef6074b9a7457011719056c9928c800f130a617c93",
     "https://deno.land/x/ts_morph@16.0.0/ts_morph.d.ts": "38668b0e3780282a56a805425494490b0045d1928bd040c47a94095749dab8c3",
     "https://deno.land/x/ts_morph@16.0.0/ts_morph.js": "9fc0f3d6a3997c2df023fabc4e529d2117d214ffd4fd04247ca2f56c4e9cd470",
+    "https://dev.jspm.io/npm:@jspm/core@2.0.1/nodelibs/process": "1d9259731556e49ecd4ce8180667577a1bdc68844dc89a5a1e71d34cad4a455d",
     "https://esm.sh/*@preact/signals-core@1.0.1": "9f215cf82316c834cdfa10bfc2ec3d002eeb837d6ad9e511709fa65f4e626e36",
     "https://esm.sh/*@preact/signals@1.0.3": "f428d1226727d7a773494bf3d89445a677a917d742b279a1162426061fb16f9a",
     "https://esm.sh/*preact-render-to-string@5.2.4": "6f28c6eb8269aeea826ae5786ade43dc56ab0cfb06ca22cfb953fc1a80910be1",

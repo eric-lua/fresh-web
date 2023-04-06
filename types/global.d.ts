@@ -1,6 +1,6 @@
 declare namespace IApiV1 {
   type Path = 'noPath' | 'mysql';
-  type Action = 'noAction' | 'QueryAllTables' | 'CreateTable' | 'QueryTableData';
+  type Action = 'noAction' | 'ExecSql' | 'QueryAllTables' | 'CreateTable' | 'QueryTableData';
 }
 
 declare interface IReqAction {

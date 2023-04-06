@@ -10,11 +10,11 @@ const client = await new Client().connect({
   poolSize: 3,
 });
 
-// test
+// NOTE  test
 const inserts = async () => {
   console.log('插入数据');
 
-  let result = await client.execute(`INSERT INTO e_user(user_id, user_name, user_pass, user_avatar) values(?,?,?,?)`, [
+  const result = await client.execute(`INSERT INTO e_user(user_id, user_name, user_pass, user_avatar) values(?,?,?,?)`, [
     crypto.randomUUID(), 'eric' + (Math.random() * 100).toFixed(), '123456', 'avatar',
   ]);
 
@@ -23,7 +23,7 @@ const inserts = async () => {
   return result;
 }
 
-// test
+// NOTE  test
 const query = async () => {
   const users = await client.query(`select * from e_user where user_name = "eric%"`);
   const queryWithParams = await client.query(
@@ -32,6 +32,19 @@ const query = async () => {
   );
   console.log(users, queryWithParams);
   return { users, queryWithParams }
+}
+
+// NOTE  execSql test
+
+// deno-lint-ignore no-explicit-any
+export const execSql: (sql: string) => Promise<any> = async (sql) => {
+  try {
+    const r = await client.execute(sql);
+    return r;
+  } catch (error) {
+    console.error(error);
+    return { result: '执行失败！', error };
+  }
 }
 
 /** 查询所有数据表 */

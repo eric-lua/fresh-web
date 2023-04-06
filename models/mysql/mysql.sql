@@ -20,7 +20,7 @@ insert into e_user(user_id,user_name, user_pass) values
 ('super', 'tom', '123456');
 
 select * from e_user;
-
+show full columns from `e_user`; -- 查看表字段
 
 CREATE TABLE `e_strong_reminder` (
   `sr_id` char(100) NOT NULL,

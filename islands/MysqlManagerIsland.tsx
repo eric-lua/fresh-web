@@ -1,17 +1,24 @@
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { ITable, Table } from "../components/index.ts";
+import { Button } from "../components/Button.tsx";
 
-type Props = {}
+type Props = {
+  type?: string;
+}
 
 const MysqlManagerIsland = (props: Props) => {
   const [tables, setTables] = useState<string[]>([])
+  const [selectedTable, setSelectedTable] = useState<string>(tables[0]);
   const getTables = async () => {
     const result = await fetch('/api/mysql?action=QueryAllTables', { method: 'post' });
     setTables(await result.json());
   }
 
-  const [tableData, setTableData] = useState([])
+  // deno-lint-ignore no-explicit-any
+  const [tableData, setTableData] = useState<any[]>([])
   const getTableData = async (tableName: string) => {
+    setSelectedTable(tableName);
     const result = await fetch('/api/mysql?action=QueryTableData', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -51,6 +58,25 @@ const MysqlManagerIsland = (props: Props) => {
     }
   }
 
+  // sql test
+  const [inputSql, setInputSql] = useState<string>('');
+  const handleInputSql = async () => {
+    console.log('handleInputSql inputSql: ', inputSql);
+    const inputSqlResult = await fetch('/api/mysql?action=ExecSql', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ sql: inputSql }),
+    });
+    console.log('inputSqlResult: ', await inputSqlResult.json());
+  }
+
+  const getColumns = () => {
+    if (tableData?.length > 0 && tableData[0]) {
+      return Object.keys(tableData[0]).map(item => ({ key: item }));
+    }
+    return [];
+  }
+
   useEffect(() => {
     getTables();
   }, []);
@@ -60,14 +86,36 @@ const MysqlManagerIsland = (props: Props) => {
       <aside class="w-48">
         <ul>
           {
-            tables.map(item => <li key={item} onClick={() => getTableData(item)}>
+            tables.map(item => <li key={item} onClick={() => getTableData(item)} class={`${selectedTable === item ? 'text-blue-800' : ''}`}>
               {item}
             </li>)
           }
         </ul>
       </aside>
       <main class="flex-1">
-        MysqlManagerIsland
+        <div>
+          <span>sql 集中测试：</span>
+          <input
+            {...props}
+            disabled={!IS_BROWSER}
+            class={`px-3 py-2 bg-white rounded border(gray-500 2) disabled:(opacity-50 cursor-not-allowed)`}
+            value={inputSql}
+            onInput={(v) => {
+              // deno-lint-ignore ban-ts-comment
+              // @ts-ignore
+              setInputSql(v.target?.value);
+            }}
+          />
+          <button
+            {...props}
+            onClick={handleInputSql}
+            disabled={!IS_BROWSER}
+            class={'px-3 py-2 bg-blue-200 text-blue-800 rounded hover:bg-blue-300 active:bg-blue-400'}
+          >
+            Body 传参测试
+          </button>
+        </div>
+        <hr />
         <button
           {...props}
           onClick={createTable}
@@ -84,25 +132,31 @@ const MysqlManagerIsland = (props: Props) => {
         >
           Body 传参测试
         </button>
+        <hr />
+        <div>
+          <span>Operations: </span>
+          <button
+            {...props}
+            onClick={handleInputSql}
+            disabled={!IS_BROWSER}
+            class={'px-3 py-2 bg-blue-200 text-blue-800 rounded hover:bg-blue-300 active:bg-blue-400'}
+          >
+            Body 传参测试
+          </button>
+        </div>
 
         <hr />
-        {
-          tableData.length > 0 && <table>
-            <thead>
-              <tr>
-                {
-                  Object.keys(tableData[0]).map(item => <th key={item}>{item}</th>)
-                }
-              </tr>
-            </thead>
-            <tbody>
-              {/* {tableData.map(item => <tr key={Math.random()}></tr>)} */}
-              {tableData.map(item => <tr>
-                {Object.values(item).map(v => <td>{v ?? ' - '}</td>)}
-              </tr>)}
-            </tbody>
-          </table>
-        }
+        <Table
+          columns={[...getColumns(), ({
+            key: 'operation',
+            render(row) {
+              return <Button onClick={() => console.log('row: ', row)}>{row.user_name || 'user_name'}</Button>
+            }
+          }) as ITable.Column]}
+          // columns={[{key: 'aaa'}, {key: 'aaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}]}
+          data={tableData}
+          autoIndex
+        />
       </main>
     </div>
   )

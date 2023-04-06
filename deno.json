@@ -15,7 +15,9 @@
     "jsxImportSource": "preact",
     "types": [
       "./types/global.d.ts",
-      "./types/user.d.ts"
+      "./types/user.d.ts",
+      "./types/mysql.d.ts",
+      "./types/error-code.d.ts"
     ]
   }
 }
