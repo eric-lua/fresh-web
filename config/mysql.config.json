@@ -1,0 +1,7 @@
+{
+  "hostname": "127.0.0.1",
+  "username": "custom_user",
+  "password": "custom_password",
+  "db": "custom_db",
+  "poolSize": 3
+}

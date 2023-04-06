@@ -2,13 +2,17 @@
  * https://github.com/denodrivers/mysql
  */
 import { Client } from "https://deno.land/x/mysql@v2.11.0/mod.ts";
-const client = await new Client().connect({
-  hostname: '43.136.174.110',
-  username: 'root',
-  password: 'cire@toor',
-  db: "eric_mysql",
-  poolSize: 3,
-});
+
+let res;
+try {
+  res = Deno.readTextFileSync('./config/mysql.private.config.json')
+} catch (_error) {
+  res = Deno.readTextFileSync('./config/mysql.config.json')
+}
+const mysqlInfo = JSON.parse(res);
+
+// NOTE  copy /config/mysql.config.json to ./config/mysql.private.config.json and modify your db info.
+const client = await new Client().connect(mysqlInfo);
 
 // NOTE  test
 const inserts = async () => {

@@ -1,2 +1,3 @@
-config/*.previte.config.ts
+*.private.config.json
+*.private.config.ts
 log
