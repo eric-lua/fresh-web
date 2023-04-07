@@ -1,7 +1,7 @@
 /**
  * https://github.com/denodrivers/mysql
  */
-import { Client } from "https://deno.land/x/mysql@v2.11.0/mod.ts";
+import { Client } from "mysql/mod.ts";
 
 let res;
 try {
@@ -11,7 +11,7 @@ try {
 }
 const mysqlInfo = JSON.parse(res);
 
-// NOTE  copy /config/mysql.config.json to ./config/mysql.private.config.json and modify your db info.
+// NOTE  开发部署配置： copy /config/mysql.config.json to ./config/mysql.private.config.json and modify your db info.
 const client = await new Client().connect(mysqlInfo);
 
 // NOTE  test
@@ -39,7 +39,6 @@ const query = async () => {
 }
 
 // NOTE  execSql test
-
 // deno-lint-ignore no-explicit-any
 export const execSql: (sql: string) => Promise<any> = async (sql) => {
   try {

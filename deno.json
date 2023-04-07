@@ -18,6 +18,10 @@
       "./types/user.d.ts",
       "./types/mysql.d.ts",
       "./types/error-code.d.ts"
+    ],
+    "includes": [
+      "components",
+      "utils"
     ]
   }
 }

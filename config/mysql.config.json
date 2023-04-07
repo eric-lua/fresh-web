@@ -3,5 +3,6 @@
   "username": "custom_user",
   "password": "custom_password",
   "db": "custom_db",
-  "poolSize": 3
+  "poolSize": 3,
+  "timeout": 10000
 }

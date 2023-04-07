@@ -1,7 +1,9 @@
 import { useState } from 'preact/hooks';
 import { counter } from "../store/index.ts";
 
-type Props = {}
+type Props = {
+  [key: string]: unknown;
+}
 
 const PostTest = (props: Props) => {
   const [postData, setPostData] = useState({});

@@ -1,5 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { JSX } from "preact";
+import { IPagination } from "../Pagination/index.ts";
 
 export declare namespace ITable {
   /** Table 属性 */
@@ -9,6 +10,8 @@ export declare namespace ITable {
     empty?: string | EmptyRenderFn;
     placeHolder?: string;
     autoIndex?: boolean;
+    className?: string;
+    pagination?: IPagination.Props;
   }
 
   /** 表格列属性 */

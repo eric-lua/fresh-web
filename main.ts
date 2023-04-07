@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-empty
 /// <reference no-default-lib="true" />
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />

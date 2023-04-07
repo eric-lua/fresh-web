@@ -156,6 +156,18 @@ const MysqlManagerIsland = (props: Props) => {
           // columns={[{key: 'aaa'}, {key: 'aaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}]}
           data={tableData}
           autoIndex
+          pagination={{
+            total: 225,
+            debug: true,
+            pageBtnCount: 7,
+            page: { size: 35, index: 1 },
+            onChange: (page) => {
+              console.log('page: ', page)
+            },
+            onPageSizeChange: (page) => {
+              console.log('page size: ', page)
+            }
+          }}
         />
       </main>
     </div>

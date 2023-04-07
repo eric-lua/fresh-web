@@ -11,6 +11,7 @@
     "twind": "https://esm.sh/v113/*twind@0.16.19",
     "denodb/": "https://deno.land/x/denodb@v1.1.0/",
     "twind/": "https://esm.sh/v113/*twind@0.16.19/",
+    "mysql/": "https://deno.land/x/mysql@v2.11.0/",
     "logger/": "https://deno.land/x/logger@v1.0.2/"
   },
   "scopes": {

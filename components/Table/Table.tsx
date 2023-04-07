@@ -1,13 +1,14 @@
 import { JSX } from "preact/jsx-runtime";
 import { ITable } from "./Table.typing.ts";
 import { genRandom } from "../utils/index.ts";
+import { Pagination } from "../Pagination/index.ts";
 
 // FIXME  TODO  引入外部依赖会导致报错！！！
 // import { genRandom } from "../../utils/index.ts";
 
 // deno-lint-ignore no-explicit-any
 export const Table: <T extends Record<string, any>>(props: ITable.Props<T>) => JSX.Element = ({
-  columns, data, empty, placeHolder = '-', autoIndex = false,
+  columns, data, empty, placeHolder = '-', autoIndex = false, className = '', pagination,
 }) => {
   // 全局生成一个当前table的随机标识
   const random = genRandom();
@@ -25,8 +26,8 @@ export const Table: <T extends Record<string, any>>(props: ITable.Props<T>) => J
     return <td key={`${random}-tr-${index}-td-${tdIdx}`}>{(row as any)[item.key] ?? placeHolder}</td>
   }
 
-  return (
-    <table>
+  const renderTable = () => (
+    <table class={`${className}`}>
       <thead>
         <tr>
           {autoIndex && <th class="p-2" key={`${random}-th-i-1`}>{'#'}</th>}
@@ -57,4 +58,15 @@ export const Table: <T extends Record<string, any>>(props: ITable.Props<T>) => J
       }
     </table >
   )
+
+  return <>
+    {
+      pagination ? <div>
+        {renderTable()}
+        <Pagination {...pagination} />
+      </div>
+        :
+        renderTable()
+    }
+  </>
 }

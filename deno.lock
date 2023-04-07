@@ -38,6 +38,8 @@
     "https://deno.land/std@0.109.0/io/util.ts": "85c33d61b20fd706acc094fe80d4c8ae618b04abcf3a96ca2b47071842c1c8ac",
     "https://deno.land/std@0.109.0/testing/_diff.ts": "ccd6c3af6e44c74bf1591acb1361995f5f50df64323a6e7fb3f16c8ea792c940",
     "https://deno.land/std@0.109.0/testing/asserts.ts": "6b0d6ba564bdff807bd0f0e93e02c48aa3177acf19416bf84a7f420191ef74cd",
+    "https://deno.land/std@0.117.0/_wasm_crypto/crypto.wasm.js": "e93d38b215c05c552669e9565654599b13e7898ebd3f10ac91e39413efda4b84",
+    "https://deno.land/std@0.117.0/encoding/base64.ts": "0b58bd6477214838bf711eef43eac21e47ba9e5c81b2ce185fe25d9ecab3ebb3",
     "https://deno.land/std@0.140.0/_util/assert.ts": "e94f2eb37cebd7f199952e242c77654e43333c1ac4c5c700e929ea3aa5489f74",
     "https://deno.land/std@0.140.0/_util/os.ts": "3b4c6e27febd119d36a416d7a97bd3b0251b77c88942c8f16ee5953ea13e2e49",
     "https://deno.land/std@0.140.0/fs/_util.ts": "0fb24eb4bfebc2c194fb1afdb42b9c3dda12e368f43e8f2321f84fc77d42cb0f",
