@@ -12,10 +12,12 @@ import * as $5 from "./routes/api/joke.ts";
 import * as $6 from "./routes/api/mysql.ts";
 import * as $7 from "./routes/api/postData.ts";
 import * as $8 from "./routes/cms/mysql.tsx";
-import * as $9 from "./routes/index.tsx";
-import * as $10 from "./routes/patttern.ts";
-import * as $11 from "./routes/search.tsx";
-import * as $12 from "./routes/store.tsx";
+import * as $9 from "./routes/cube.tsx";
+import * as $10 from "./routes/icons.tsx";
+import * as $11 from "./routes/index.tsx";
+import * as $12 from "./routes/patttern.ts";
+import * as $13 from "./routes/search.tsx";
+import * as $14 from "./routes/store.tsx";
 import * as $$0 from "./islands/Counter.tsx";
 import * as $$1 from "./islands/Mysql.tsx";
 import * as $$2 from "./islands/MysqlManagerIsland.tsx";
@@ -34,10 +36,12 @@ const manifest = {
     "./routes/api/mysql.ts": $6,
     "./routes/api/postData.ts": $7,
     "./routes/cms/mysql.tsx": $8,
-    "./routes/index.tsx": $9,
-    "./routes/patttern.ts": $10,
-    "./routes/search.tsx": $11,
-    "./routes/store.tsx": $12,
+    "./routes/cube.tsx": $9,
+    "./routes/icons.tsx": $10,
+    "./routes/index.tsx": $11,
+    "./routes/patttern.ts": $12,
+    "./routes/search.tsx": $13,
+    "./routes/store.tsx": $14,
   },
   islands: {
     "./islands/Counter.tsx": $$0,

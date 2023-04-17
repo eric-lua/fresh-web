@@ -1,7 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { ITable, Table } from "../components/index.ts";
-import { Button } from "../components/Button.tsx";
+import { ITable, Table, Button } from "../components/index.ts";
 
 type Props = {
   type?: string;
@@ -150,7 +149,7 @@ const MysqlManagerIsland = (props: Props) => {
           columns={[...getColumns(), ({
             key: 'operation',
             render(row) {
-              return <Button onClick={() => console.log('row: ', row)}>{row.user_name || 'user_name'}</Button>
+              return <Button type="link" onClick={() => console.log('row: ', row)}>{row.user_name || 'user_name'}</Button>
             }
           }) as ITable.Column]}
           // columns={[{key: 'aaa'}, {key: 'aaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}, {key: 'aaaaa'}]}

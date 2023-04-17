@@ -124,6 +124,13 @@ export const queryTableData = async (tableName: string) => {
   return await client.query(sql);
 }
 
+export const createDatabases = async (databases: string[]) => {
+  // deno 创建数据库
+  for (const item of databases) {
+    await client.query(`CREATE DATABASE IF NOT EXISTS ${item}`);
+  }
+}
+
 export {
   inserts, query,
 }

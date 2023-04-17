@@ -1,11 +1,16 @@
 import { JSX } from "preact/jsx-runtime";
+import { Head } from "$fresh/runtime.ts";
 
 type Props = {
+  title?: string;
   children: JSX.Element | JSX.Element[];
 }
 
-const PageWarpper = ({ children }: Props) => {
-  return (
+const PageWarpper = ({ children, title }: Props) => {
+  return (<>
+    <Head>
+      {title && <title>{title}</title>}
+    </Head>
     <div class="h-screen flex flex-col">
       <header>
         <nav class="flex justify-start p-4">
@@ -14,13 +19,14 @@ const PageWarpper = ({ children }: Props) => {
           <a className="w-20" href="/store">store</a>
           <a className="w-20" href="/search">search</a>
           <a className="w-20" href="/joke">joke</a>
+          <a className="w-20" href="/icons">icons</a>
           <a className="w-20" href="/cms/mysql">Mysql</a>
         </nav>
       </header>
 
       <main class="flex-1">{children}</main>
     </div>
-  )
+  </>)
 }
 
 export default PageWarpper;

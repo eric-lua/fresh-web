@@ -1,8 +1,9 @@
 import { JSX } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { IPagination } from "./Pagination.typing.ts";
-import { Button } from "../Button.tsx";
 import { ILibErrorCode } from "../typing/index.ts";
+import { Select } from "../Select/index.ts";
+import { Button } from "../Button/index.ts";
 
 export const Pagination = ({
   total, page, layout = [
@@ -79,18 +80,32 @@ export const Pagination = ({
   // SizeSelect = '分页大小选择',
   const genSizeSelect = (comp: IPagination.Components) => {
     // TODO  替换为 Select 组件
-    return <select key={comp} value={pageInfo.size} onChange={(v) => {
-      const size = parseInt((v.target as HTMLSelectElement).value, 10);
-      if (pageInfo.index > Math.ceil(total / size)) {
-        setPageInfo({ ...pageInfo, size, index: Math.ceil(total / size) });
-        onPageSizeChange?.({ ...pageInfo, size, index: Math.ceil(total / size) });
-      } else {
-        setPageInfo({ ...pageInfo, size })
-        onPageSizeChange?.({ ...pageInfo, size });
-      }
-    }}>
-      {getSizeOption().map(n => <option value={n} key={`pagination-${n}-${Math.random}`}>每页{n}条</option>)}
-    </select>;
+    return <Select
+      key={comp}
+      value={pageInfo.size}
+      onChange={(v) => console.log('on select change: ', v)}
+      options={getSizeOption().map(item => ({ label: `每页${item}条`, value: item }))}
+    />;
+    // return <Select  key={comp} value={pageInfo.size} onChange={(v) => console.log('on select change: ',  v)}>
+
+    //   {getSizeOption().map(n => {
+    //     console.log('zzzzzzzz: ', n);
+    //     return <Select.Option value={n}  key={`pagination-${n}-${Math.random}`} />
+    //   })}
+    // </Select>
+
+    // return <select key={comp} value={pageInfo.size} onChange={(v) => {
+    //   const size = parseInt((v.target as HTMLSelectElement).value, 10);
+    //   if (pageInfo.index > Math.ceil(total / size)) {
+    //     setPageInfo({ ...pageInfo, size, index: Math.ceil(total / size) });
+    //     onPageSizeChange?.({ ...pageInfo, size, index: Math.ceil(total / size) });
+    //   } else {
+    //     setPageInfo({ ...pageInfo, size })
+    //     onPageSizeChange?.({ ...pageInfo, size });
+    //   }
+    // }}>
+    //   {getSizeOption().map(n => <option value={n} key={`pagination-${n}-${Math.random}`}>每页{n}条</option>)}
+    // </select>;
   }
   // PageBtn = '分页页码按钮',
   const getBtnList: () => IPagination.PageBtn[] = () => {
