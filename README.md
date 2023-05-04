@@ -26,3 +26,6 @@ This will watch the project directory and restart as necessary.
 - https://deno.land/x/fresh_store@v1.0.2
 - https://github.com/deno-library/logger 日志系统完善
 - https://deno.land/x/fresh_seo@0.2.1
+
+## freshtwind 插件使用，解决twind插件content无效的问题
+- https://deno.land/x/freshwind@4.0.0

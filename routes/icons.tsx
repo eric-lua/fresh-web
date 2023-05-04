@@ -1,4 +1,6 @@
 import PageWarpper from "../components/PageWarpper.tsx";
+// NOTE  http://localhost:3000/#/icon/focus
+
 
 export default function () {
   return (
@@ -59,7 +61,11 @@ export default function () {
 
       </div>
       <div>
+        <div className="color-of-red before:content-['hello\_world']">
         class icons
+        class icons
+        class icons
+        </div>
         <br />
         {/* 使用 twind span 写一个 loading iocn */}
         {/* 只用css实现一个 loading icon */}
@@ -87,6 +93,54 @@ export default function () {
         <span class="close-icon"></span>
         <br />
 
+        {/* 纯 tailwind css 实现一个 对号 */}
+        <div class="w-2 "></div>
+        <div class="inline-block w-8 h-8 border-2 border-gray-800 rounded-full border-t-green-400 animate-my-spin after-content"></div>
+        <br />
+
+        {/* 纯 css 实现一个搜索图标 */}
+        <div class="search-icon"></div>
+        <div class="inline-block w-6 h-6 border-2 border-gray-800 rounded-full border-t-green-400 animate-my-spin1 before:content=['zzz'] before:h-10 before:w-10 before:bg-red-500 before:absolute before:inset-0 before:top-4"></div>
+        <style>
+          {/* .search-icon {
+            width: 24px;
+          height: 24px;
+          border: 2px solid #ccc;
+          border-radius: 50%;
+          border-top-color: #333;
+          animation: loading 1s linear infinite;
+          position: relative;
+          }
+          .search-icon::before {
+            content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #333;
+          } */}
+        </style>
+
+        <br />
+        {/* <div before="Hello World" class="before:content-[attr(before)]"></div> */}
+        {/* <div before="Hello World" class="before:content-['attr(before)']"></div> */}
+        {/* <div class="before:content-['attr(before)']"></div> */}
+        <div class="before:content-['Hello_World']"></div>
+        <div class="before:content-['Mobile'] md:before:content-['Desktop']"></div>
+
+        <hr />
+        <hr />
+        <div>
+          <i className="icon close \
+            // main
+            inline-block text-black bg-black absolute mt-0 ml-0 w-[21px] h-[21px] \
+            // before
+            before:tw-content-[''] before:empty-content before:absolute before:top-10px before:w-full before:h-full before:bg-[currentColor] \
+          "></i>
+        </div>
       </div>
     </PageWarpper>
   );

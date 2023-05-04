@@ -106,27 +106,28 @@ CREATE DATABASE eric_mysql DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 -- 非空字段在最前面，枚举值在中间，时间在后面
 -- 字段注释加上枚举变量
 -- 重写建表语句
-CREATe TABLE `e_users` (
-  `user_id` char(36) NOT NULL COMMENT '用户id',
-  `user_name` varchar(100) NOT NULL COMMENT '用户昵称',
-  `user_phone` varchar(100) DEFAULT NULL COMMENT '用户手机号',
-  `user_email` varchar(100) DEFAULT NULL COMMENT '用户邮箱',
-  `user_openid` varchar(100) DEFAULT NULL COMMENT '用户微信openid',
-  `user_unionid` varchar(100) DEFAULT NULL COMMENT '用户微信unionid',
-  `user_avatar` varchar(100) DEFAULT NULL COMMENT '用户头像',
-  `user_location` varchar(100) DEFAULT NULL COMMENT '用户所在地',
-  `user_subscribe_time` varchar(100) DEFAULT NULL COMMENT '用户关注时间',
-  `user_remark` varchar(100) DEFAULT NULL COMMENT '用户备注',
-  `user_password` varchar(100) DEFAULT NULL COMMENT '用户密码',
-  `user_last_login_time` timestamp DEFAULT NULL COMMENT '用户最后登录时间',
-  `user_last_login_location` varchar(100) DEFAULT NULL COMMENT '用户最后登录地点',
-  `user_gender` enum('1','2','-1') NOT NULL COMMENT '用户性别：1-男，2-女，-1-未知',
-  `user_subscribe_status` enum('1','2','0') NOT NULL COMMENT '用户关注状态：1-关注，2-取消关注，0-未关注',
-  `user_status` enum('1','2','0') NOT NULL COMMENT '用户状态：1-正常，2-禁用，0-删除',
-  `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `e_users` (
+    `user_id` char(36) NOT NULL COMMENT '用户id',
+    `user_name` varchar(100) NOT NULL COMMENT '用户昵称',
+    `user_phone` varchar(100) DEFAULT NULL COMMENT '用户手机号',
+    `user_email` varchar(100) DEFAULT NULL COMMENT '用户邮箱',
+    `user_openid` varchar(100) DEFAULT NULL COMMENT '用户微信openid',
+    `user_unionid` varchar(100) DEFAULT NULL COMMENT '用户微信unionid',
+    `user_avatar` varchar(100) DEFAULT NULL COMMENT '用户头像',
+    `user_location` varchar(100) DEFAULT NULL COMMENT '用户所在地',
+    `user_subscribe_time` varchar(100) DEFAULT NULL COMMENT '用户关注时间',
+    `user_remark` varchar(100) DEFAULT NULL COMMENT '用户备注',
+    `user_password` varchar(100) DEFAULT NULL COMMENT '用户密码',
+    `user_last_login_time` timestamp COMMENT '用户最后登录时间',
+    `user_last_login_location` varchar(100) DEFAULT NULL COMMENT '用户最后登录地点',
+    `user_gender` enum('1', '2', '-1') DEFAULT '-1' COMMENT '用户性别：1-男，2-女，-1-未知',
+    `user_subscribe_status` enum('1', '2', '0') DEFAULT '0' COMMENT '用户关注状态：1-关注，2-取消关注，0-未关注',
+    `user_status` enum('1', '2', '0') DEFAULT '1' COMMENT '用户状态：1-正常，2-禁用，0-删除',
+    `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`user_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
 
 -- ########################### e_memo ###########################
 -- ###########################  备忘录  ##########################
@@ -367,23 +368,27 @@ CREATe TABLE `e_users` (
 -- memo_status字段改为枚举字段
 -- memo_delete字段改为枚举字段
 -- 重新建表
+
+-- 最终版本
+-- NOTE Mysql外键首先需要是索引才可以！！！
 CREATE TABLE `e_memo` (
-  `memo_id` char(36) NOT NULL COMMENT '备忘录id',
-  `memo_title` varchar(100) NOT NULL COMMENT '备忘录标题',
-  `memo_content` varchar(1000) NOT NULL COMMENT '备忘录内容',
-  `memo_users` varchar(36) DEFAULT NULL COMMENT '备忘录创建人',
-  `memo_related` varchar(100) DEFAULT NULL COMMENT '备忘录相关人员',
-  `memo_status` enum('0','1') NOT NULL DEFAULT '0' COMMENT '备忘录状态：0-未完成，1-已完成',
-  `memo_delete` enum('0','1') NOT NULL DEFAULT '0' COMMENT '备忘录删除标记：0-未删除，1-已删除',
-  `memo_remind` timestamp NULL DEFAULT NULL COMMENT '备忘录提醒时间',
-  `memo_tags` varchar(100) DEFAULT NULL COMMENT '备忘录标签',
-  `memo_operation` varchar(100) DEFAULT NULL COMMENT '备忘录操作概要',
-  `memo_remark` varchar(100) DEFAULT NULL COMMENT '备忘录备注',
-  `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '备忘录创建时间',
-  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '备忘录修改时间',,
-  PRIMARY KEY (`memo_id`),
-  CONSTRAINT `e_memo_ibfk_1` FOREIGN KEY (`memo_users`) REFERENCES `e_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    `memo_id` char(36) NOT NULL COMMENT '备忘录id',
+    `memo_title` varchar(100) NOT NULL COMMENT '备忘录标题',
+    `memo_content` varchar(1000) NOT NULL COMMENT '备忘录内容',
+    `memo_owner` char(36) DEFAULT '' COMMENT '备忘录创建人',
+    `memo_related` varchar(100) DEFAULT NULL COMMENT '备忘录相关人员',
+    `memo_status` enum('0', '1') DEFAULT '0' COMMENT '备忘录状态：0-未完成，1-已完成',
+    `memo_delete` enum('0', '1') DEFAULT '0' COMMENT '备忘录删除标记：0-未删除，1-已删除',
+    `memo_remind` timestamp NULL DEFAULT NULL COMMENT '备忘录提醒时间',
+    `memo_tags` varchar(100) DEFAULT NULL COMMENT '备忘录标签',
+    `memo_operation` varchar(100) DEFAULT NULL COMMENT '备忘录操作概要',
+    `memo_remark` varchar(100) DEFAULT NULL COMMENT '备忘录备注',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '备忘录创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '备忘录修改时间',
+    PRIMARY KEY (`memo_id`),
+    KEY `memo_owner` (`memo_owner`),
+    CONSTRAINT `e_memo_ibfk_1` FOREIGN KEY (`memo_owner`) REFERENCES `e_users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 -- ########################### e_memo_remind ###########################
 -- ###########################  微信强提醒记录  ##########################
@@ -542,20 +547,20 @@ CREATE TABLE `e_memo_remind` (
   `remind_id` char(36) NOT NULL COMMENT '提醒id',
   `remind_title` varchar(100) NOT NULL COMMENT '提醒标题',
   `remind_content` varchar(100) NOT NULL COMMENT '提醒内容',
-  `remind_type` enum('0','1','2','3','4','5','6','7','8','9') NOT NULL COMMENT '提醒类型，0-无，1-日程，2-会议，3-任务，4-电话，5-邮件，6-短信，7-微信，8-其他，9-自定义',
-  `remind_status` enum('0','1','2','3','4') NOT NULL COMMENT '提醒状态，0-未提醒，1-已提醒，2-已完成，3-已取消，4-已删除',
-  `remind_delete` enum('0','1') NOT NULL COMMENT '提醒删除标记，0-未删除，1-已删除',
-  `remind_users` varchar(36) DEFAULT NULL COMMENT '提醒人员',
-  `remind_related` varchar(100) NOT NULL COMMENT '提醒相关人员',
-  `remind_tags` varchar(100) NOT NULL COMMENT '提醒标签',
-  `remind_operation` varchar(100) NOT NULL COMMENT '提醒操作概要',
-  `remind_source` varchar(100) NOT NULL COMMENT '提醒来源',
+  `remind_source` char(36) DEFAULT NULL COMMENT '提醒来源',
+  `remind_type` enum('0','1','2','3','4','5','6','7','8','9') DEFAULT '0' COMMENT '提醒类型，0-无，1-日程，2-会议，3-任务，4-电话，5-邮件，6-短信，7-微信，8-其他，9-自定义',
+  `remind_status` enum('0','1','2','3','4') DEFAULT '0' COMMENT '提醒状态，0-未提醒，1-已提醒，2-已完成，3-已取消，4-已删除',
+  `remind_delete` enum('0','1') DEFAULT '0' COMMENT '提醒删除标记，0-未删除，1-已删除',
+  `remind_users` varchar(108) DEFAULT NULL COMMENT '提醒人员',
+  `remind_related` varchar(100) DEFAULT NULL COMMENT '提醒相关人员',
+  `remind_tags` varchar(100) DEFAULT NULL COMMENT '提醒标签',
+  `remind_operation` varchar(100) DEFAULT NULL COMMENT '提醒操作概要',
   `remind_remark` varchar(100) DEFAULT NULL COMMENT '提醒备注',
   `remind_remind` timestamp NULL DEFAULT NULL COMMENT '提醒时间',
   `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '提醒创建时间',
-  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '提醒修改时间',,
+  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '提醒修改时间',
   PRIMARY KEY (`remind_id`),
-  CONSTRAINT `e_memo_remind_ibfk_1` FOREIGN KEY (`remind_users`) REFERENCES `e_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `remind_source` (`remind_source`),
   CONSTRAINT `e_memo_remind_ibfk_2` FOREIGN KEY (`remind_source`) REFERENCES `e_memo` (`memo_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -621,11 +626,11 @@ CREATE TABLE `e_memo_remind` (
 CREATE TABLE `e_family` (
   `family_id` char(36) NOT NULL COMMENT '家庭id',
   `family_name` varchar(100) NOT NULL COMMENT '家庭名称',
-  `family_owner` varchar(36) NOT NULL COMMENT '家庭所有者',
+  `family_owner` char(36) DEFAULT NULL COMMENT '家庭所有者',
   `family_users` varchar(36) DEFAULT NULL COMMENT '家庭成员',
   `family_remark` varchar(100) DEFAULT NULL COMMENT '家庭备注',
-  `family_status` enum('0','1','2','3','4') NOT NULL COMMENT '家庭状态，0-正常，1-已删除，2-已取消，3-已完成，4-已过期',
-  `family_delete` enum('0','1') NOT NULL COMMENT '家庭删除标记，0-未删除，1-已删除',
+  `family_status` enum('0','1','2','3','4') DEFAULT '0' COMMENT '家庭状态，0-正常，1-已删除，2-已取消，3-已完成，4-已过期',
+  `family_delete` enum('0','1') DEFAULT '0' COMMENT '家庭删除标记，0-未删除，1-已删除',
   `family_tags` varchar(100) DEFAULT NULL COMMENT '家庭标签',
   `family_operation` varchar(100) DEFAULT NULL COMMENT '家庭操作概要',
   `family_type` varchar(100) DEFAULT NULL COMMENT '家庭类型',
@@ -633,7 +638,8 @@ CREATE TABLE `e_family` (
   `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '家庭创建时间',  
   `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '家庭修改时间',
   PRIMARY KEY (`family_id`),
-  CONSTRAINT `e_family_ibfk_1` FOREIGN KEY (`family_owner`) REFERENCES `e_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `family_owner` (`family_owner`),
+  CONSTRAINT `e_family_ibfk_1` FOREIGN KEY (`family_owner`) REFERENCES `e_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -716,11 +722,12 @@ CREATE TABLE `e_log` (
   `log_tags` varchar(100) DEFAULT NULL COMMENT '日志标签',
   `log_operation` varchar(100) DEFAULT NULL COMMENT '日志操作概要',
   `log_type` enum('0','1') DEFAULT '0' COMMENT '日志类型：0-系统日志，1-业务日志' ,
-  `log_source` varchar(100) NOT NULL COMMENT '日志来源：0-系统，1-业务',
+  `log_source` varchar(100) DEFAULT '0' COMMENT '日志来源：0-系统，1-业务',
   `create_time` timestamp DEFAULT CURRENT_TIMESTAMP COMMENT '日志创建时间',
-  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '日志修改时间',,
+  `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '日志修改时间',
   PRIMARY KEY (`log_id`),
-  CONSTRAINT `e_log_ibfk_1` FOREIGN KEY (`log_related`) REFERENCES `e_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `create_time` (`create_time`),
+  KEY `update_time` (`update_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ########################### e_log_insert ###########################
@@ -798,44 +805,43 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `e_memo_insert` AFTER INSERT ON `e_memo` FOR EACH ROW
 BEGIN
-  CALL e_log_insert('新增备忘', NEW.memo_content, '新增备忘', NEW.memo_users, NEW.memo_users, '0', '0', '备忘', '新增备忘', '0', '0');
+  CALL e_log_insert('新增备忘', NEW.memo_content, '新增备忘', NEW.memo_owner, NEW.memo_owner, '0', '0', '备忘', '新增备忘', '0', '0');
 END$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER `e_memo_update` AFTER UPDATE ON `e_memo` FOR EACH ROW
 BEGIN
-  CALL e_log_insert('修改备忘', NEW.memo_content, '修改备忘', NEW.memo_users, NEW.memo_users, '0', '0', '备忘', '修改备忘', '0', '0');
+  CALL e_log_insert('修改备忘', NEW.memo_content, '修改备忘', NEW.memo_owner, NEW.memo_owner, '0', '0', '备忘', '修改备忘', '0', '0');
 END$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER `e_memo_delete` AFTER DELETE ON `e_memo` FOR EACH ROW
 BEGIN
-  CALL e_log_insert('删除备忘', OLD.memo_content, '删除备忘', OLD.memo_users, OLD.memo_users, '0', '0', '备忘', '删除备忘', '0', '0');
+  CALL e_log_insert('删除备忘', OLD.memo_content, '删除备忘', OLD.memo_owner, OLD.memo_owner, '0', '0', '备忘', '删除备忘', '0', '0');
 END$$
 DELIMITER ;
-
 
 -- e_users 表增删改日志记录
 DELIMITER $$
 CREATE TRIGGER `e_users_insert` AFTER INSERT ON `e_users` FOR EACH ROW
 BEGIN
-  CALL e_log_insert('新增用户', NEW.users_name, '新增用户', NEW.users_id, NEW.users_id, '0', '0', '用户', '新增用户', '0', '0');
+  CALL e_log_insert('新增用户', NEW.user_name, '新增用户', NEW.user_id, NEW.user_id, '0', '0', '用户', '新增用户', '0', '0');
 END$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER `e_users_update` AFTER UPDATE ON `e_users` FOR EACH ROW
 BEGIN
-  CALL e_log_insert('修改用户', NEW.users_name, '修改用户', NEW.users_id, NEW.users_id, '0', '0', '用户', '修改用户', '0', '0');
+  CALL e_log_insert('修改用户', NEW.user_name, '修改用户', NEW.user_id, NEW.user_id, '0', '0', '用户', '修改用户', '0', '0');
 END$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER `e_users_delete` AFTER DELETE ON `e_users` FOR EACH ROW
 BEGIN
-  CALL e_log_insert('删除用户', OLD.users_name, '删除用户', OLD.users_id, OLD.users_id, '0', '0', '用户', '删除用户', '0', '0');
+  CALL e_log_insert('删除用户', OLD.user_name, '删除用户', OLD.user_id, OLD.user_id, '0', '0', '用户', '删除用户', '0', '0');
 END$$
 DELIMITER ;
 

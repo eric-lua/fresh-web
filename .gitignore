@@ -1,3 +1,4 @@
 *.private.config.json
 *.private.config.ts
 log
+.vscode
