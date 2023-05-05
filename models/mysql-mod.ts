@@ -18,7 +18,7 @@ const client = await new Client().connect(mysqlInfo);
 const inserts = async () => {
   console.log('插入数据');
 
-  const result = await client.execute(`INSERT INTO e_user(user_id, user_name, user_pass, user_avatar) values(?,?,?,?)`, [
+  const result = await client.execute(`INSERT INTO e_users(user_id, user_name, user_password, user_avatar) values(?,?,?,?)`, [
     crypto.randomUUID(), 'eric' + (Math.random() * 100).toFixed(), '123456', 'avatar',
   ]);
 
@@ -29,10 +29,10 @@ const inserts = async () => {
 
 // NOTE  test
 const query = async () => {
-  const users = await client.query(`select * from e_user where user_name = "eric%"`);
+  const users = await client.query(`select * from e_users where user_name = "eric%"`);
   const queryWithParams = await client.query(
-    "select ??,user_name from ?? where user_pass = ?",
-    ["user_id", "e_user", '123456'],
+    "select ??,user_name from ?? where user_password = ?",
+    ["user_id", "e_users", '123456'],
   );
   console.log(users, queryWithParams);
   return { users, queryWithParams }

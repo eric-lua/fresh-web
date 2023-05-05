@@ -6,14 +6,14 @@ type Props = {}
 const Mysql = (props: Props) => {
   return (
     <div>
-      <div onClick={async () => {
-        console.log('inserts: inserts');
-        const res = await fetch('/api/inserts', {
+      <div
+        onClick={async () => {
+          console.log('inserts: inserts');
+          const res = await fetch('/api/inserts', {
 
-        })
-        console.log('插入结果：', await res.json());
-
-      }}>Mysql inserts</div>
+          })
+          console.log('插入结果：', await res.json());
+        }}>Mysql inserts</div>
     </div>
   )
 }

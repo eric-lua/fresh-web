@@ -3,6 +3,7 @@ import { PageProps, Handler, HandlerContext } from "$fresh/server.ts";
 // import { models } from "../models/index.ts"
 import { query } from "../models/mysql-mod.ts"
 import Mysql from "../islands/Mysql.tsx";
+/** @type {import('twind').Configuration} */
 
 export const handler: Handler = async (_req: Request, ctx: HandlerContext) => {
   const users = await query();
@@ -12,14 +13,14 @@ export const handler: Handler = async (_req: Request, ctx: HandlerContext) => {
 const about = ({ data }: PageProps) => {
   return (
     <PageWarpper>
-      <div>about</div>
+      <div class="w-full inline-block w-d ani" className="w-1">about</div>
       <hr />
-      <pre>
+      <pre class='w-block h- tw` w`'>
         {JSON.stringify(data.users, null, ' ')}
       </pre>
       <Mysql />
     </PageWarpper>
-  )
+  ) 
 }
 
 export default about

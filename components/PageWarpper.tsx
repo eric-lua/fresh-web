@@ -1,5 +1,5 @@
-import { JSX } from "preact/jsx-runtime";
 import { Head } from "$fresh/runtime.ts";
+import { JSX } from "preact";
 
 type Props = {
   title?: string;
@@ -10,6 +10,7 @@ const PageWarpper = ({ children, title }: Props) => {
   return (<>
     <Head>
       {title && <title>{title}</title>}
+      <link rel="stylesheet" href="/icons.css" />
     </Head>
     <div class="h-screen flex flex-col">
       <header>

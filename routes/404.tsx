@@ -1,10 +1,13 @@
 import { UnknownPageProps } from "$fresh/server.ts";
+import PageWarpper from "../components/PageWarpper.tsx";
 
 type Props = {}
 
 const NotFoundPage = ({ url }: UnknownPageProps) => {
   return (
-    <div>404</div>
+    <PageWarpper title="404 Not Found.">
+      <div>404</div>
+    </PageWarpper>
   )
 }
 

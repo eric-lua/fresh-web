@@ -6,10 +6,8 @@
 
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
-
-import twindPlugin from "$fresh/plugins/twind.ts";
-import twindConfig from "./twind.config.ts";
+import options from "./options.ts";
 
 import { logger as _logger } from "./utils/index.ts";
 
-await start(manifest, { plugins: [twindPlugin(twindConfig)], port: 8080 });
+await start(manifest, {...options, port: 8080});
