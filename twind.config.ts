@@ -1,27 +1,13 @@
 // deno-lint-ignore-file ban-ts-comment
-import { defineConfig } from "@twind/core";
+import { css, defineConfig, style } from "@twind/core";
+import presetAutoprefix from "@twind/preset-autoprefix"
 import presetTailwind from "@twind/preset-tailwind";
 import * as colors from "@twind/preset-tailwind/colors";
 import { Options } from "$fresh/plugins/twindv1.ts";
 
 export default {
   ...defineConfig({
-    presets: [presetTailwind()],
-    variants: {
-      // @ts-ignore
-      animation: ["responsive", "motion-safe", "motion-reduce"],
-      'after-content': {
-        display: "inline-block",
-        width: "20px",
-        height: "20px",
-        content: "'zzZ'",
-        backcolor: "red",
-      },
-      ".color-of-red": "color: red",
-      stringify: {
-        ".color-of-red": "color: red",
-      },
-    },
+    presets: [presetAutoprefix(), presetTailwind({ disablePreflight: true })],
     theme: {
       colors: {
         black: '#000',
@@ -112,10 +98,50 @@ export default {
           // 改为不规律旋转
           'my-spin4': 'my-test 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         },
-
-
       },
     },
+    rules: [
+      // test
+      ["color-of-red", { color: "red" }],
+      ["color-of-blue", () => ({ color: "blue" })],
+      /** 官方示例 */
+      // 静态css变量名
+      ['hidden', { display: 'none' }],
+      // 动态css变量名 
+      // @ts-ignore
+      ['m-(\\d+)', (match) => ({ margin: `${match[1] / 4}rem` })],
+      // 静态变量属性，动态变量名
+      ['table-(auto|fixed)', 'tableLayout'],
+      // 模块化css变量
+      ['card', 'py-2 px-4 font-semibold rounded-lg shadow-md'],
+      // 动态模块化css变量
+      ['card-', ({ $$ }) => `bg-${$$}-400 text-${$$}-100 py-2 px-4 rounded-lg`],
+      // 单个css属性别名，需要加~前缀，否则会被当做css变量
+      ['red', '~(text-red-100)'],
+      // @apply
+      ['btn-green', '@(bg-green-500 hover:bg-green-700 text-white)'],
+      ['btn-', ({ $$ }) => `@(bg-${$$}-400 text-${$$}-100 py-2 px-4 rounded-lg)`],
+      // style 属性规则 FIXME  不会用o(╥﹏╥)o
+      [
+        'box\\?(.+)',
+        style({
+          props: {
+            color: {
+              coral: css({
+                backgroundColor: 'coral',
+              }),
+              purple: css`
+                background-color: purple;
+              `,
+            },
+            rounded: {
+              '': 'rounded',
+              md: 'rounded-md',
+            },
+          },
+        }),
+      ],
+    ],
   }),
   selfURL: import.meta.url,
 } as Options;
