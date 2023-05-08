@@ -3,9 +3,9 @@ import User from './User.ts';
 
 const connector = new MySQLConnector({
   database: 'your_database_name',
-  host: '43.136.174.110',
+  host: '127.0.0.1',
   username: 'root',
-  password: 'cire@toor',
+  password: 'xxx@xxx',
   port: 3306, // optional
 });
 

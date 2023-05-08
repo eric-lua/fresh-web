@@ -1,6 +1,7 @@
 declare namespace IApiV1 {
   type Path = 'noPath' | 'mysql';
-  type Action = 'noAction' | 'ExecSql' | 'QueryAllTables' | 'CreateTable' | 'QueryTableData';
+  type Action = /** Mysql Api */ 'noAction' | 'ExecSql' | 'QueryAllTables' | 'CreateTable' | 'QueryTableData'
+  /** Redis Api */ | 'GetAllKeys' | 'GetValueByKey' | 'SetKeyValue' | 'DeleteKey' | 'DeleteAllKeys';
 }
 
 declare interface IReqAction {

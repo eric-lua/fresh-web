@@ -1,3 +1,5 @@
+import { libErrorCode } from "./lib.error-code.ts";
+
 /**
  * 从请求的Request中解析请求参数
  * @param req Request 路由请求的Request
@@ -31,7 +33,7 @@ export const handleActionNotFound: (action: IApiV1.Action) => Response = (action
   return new Response(JSON.stringify({
     // ...ErrorMap.ActionNotFound,
     // message: ErrorMap.ActionNotFound.message.replace(/%s/, action),
-    code: IErrorCode.ErrorCode.ActionNotFound,
-    message: IErrorCode.ErrorMessage.ActionNotFound.replace(/%s/, action),
+    code: libErrorCode.ErrorCode.ActionNotFound,
+    message: libErrorCode.ErrorMessage.ActionNotFound.replace(/%s/, action),
   }));
 }

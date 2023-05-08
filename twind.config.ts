@@ -120,7 +120,7 @@ export default {
       ['red', '~(text-red-100)'],
       // @apply
       ['btn-green', '@(bg-green-500 hover:bg-green-700 text-white)'],
-      ['btn-', ({ $$ }) => `@(bg-${$$}-400 text-${$$}-100 py-2 px-4 rounded-lg)`],
+      ['btn-', ({ $$ }) => `@(bg-${$$}-400/75 text-${$$}-100 py-2 px-4 rounded-lg)`],
       // style 属性规则 FIXME  不会用o(╥﹏╥)o
       [
         'box\\?(.+)',

@@ -22,6 +22,7 @@ const PageWarpper = ({ children, title }: Props) => {
           <a className="w-20" href="/joke">joke</a>
           <a className="w-20" href="/icons">icons</a>
           <a className="w-20" href="/cms/mysql">Mysql</a>
+          <a className="w-20" href="/cms/redis">Redis</a>
         </nav>
       </header>
 

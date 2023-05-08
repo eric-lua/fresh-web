@@ -1,0 +1,8 @@
+{
+  "hostname": "127.0.0.1",
+  "port": 6379,
+  "username": "custom_user",
+  "password": "custom_password",
+  "maxRetryCount": 10,
+  "db": 0
+}
